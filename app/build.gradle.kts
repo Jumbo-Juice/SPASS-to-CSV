@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -25,9 +27,8 @@ android {
         create("release") {
             val propertiesFile = rootProject.file("keystore.properties")
             if (propertiesFile.exists()) {
-                val properties = java.util.Properties().apply {
-                    propertiesFile.inputStream().use { load(it) }
-                }
+                val properties = Properties()
+                propertiesFile.inputStream().use { properties.load(it) }
                 storeFile = rootProject.file(properties.getProperty("storeFile"))
                 storePassword = properties.getProperty("storePassword")
                 keyAlias = properties.getProperty("keyAlias")
