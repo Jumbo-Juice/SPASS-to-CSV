@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.SpassToCsv" parent="android:Theme.Material.DayNight.NoActionBar" />
+    <!--
+      Compose draws the whole UI, so this theme only styles the window itself: the
+      background shown before the first frame, and the system bars.
+
+      The parent is a framework theme rather than an AppCompat "DayNight" one, because the
+      app has no AppCompat dependency. Day/night comes from this file being overridden in
+      res/values-night/ instead.
+    -->
+    <style name="Theme.SpassToCsv" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:statusBarColor">@color/window_background</item>
+        <item name="android:navigationBarColor">@color/window_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 </resources>
