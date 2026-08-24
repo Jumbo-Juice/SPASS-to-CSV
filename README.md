@@ -107,6 +107,36 @@ Code shrinking is off for release builds (the app is small and uses no reflectio
 turn it on, set `isMinifyEnabled = true` in `app/build.gradle.kts`; keep rules are already
 in `app/proguard-rules.pro`.
 
+### Get a prebuilt APK without installing anything
+
+`.github/workflows/build.yml` builds the APK on GitHub's runners, which already have the
+Android SDK. It runs on every push and pull request, and you can also start it by hand
+from the repository's **Actions** tab (**Build APK** -> **Run workflow**).
+
+- **Every run** attaches the APK as a workflow artifact. Open the run, scroll to
+  **Artifacts**, and download `spass-to-csv-apk`. GitHub serves artifacts as a `.zip`, so
+  unzip it to get the `.apk`. Downloading an artifact requires being signed in to GitHub.
+- **Pushing a `v*` tag** also publishes a GitHub Release with the APK attached, which
+  gives a direct download link that needs no login:
+
+  ```bash
+  git tag v1.0 && git push origin v1.0
+  ```
+
+By default the workflow signs with the standard Android debug key, so the APK installs
+straight away. To sign with a real key instead, add four repository secrets under
+**Settings -> Secrets and variables -> Actions**:
+
+| Secret | Value |
+| --- | --- |
+| `KEYSTORE_BASE64` | `base64 -w0 release.jks` |
+| `KEYSTORE_PASSWORD` | the keystore password |
+| `KEY_ALIAS` | the key alias |
+| `KEY_PASSWORD` | the key password |
+
+The workflow decodes the keystore into a temporary file, writes `keystore.properties`, and
+deletes both afterwards. Nothing signing-related is ever committed.
+
 ## Install the APK
 
 ```bash
