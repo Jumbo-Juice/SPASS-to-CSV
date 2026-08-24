@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Only the folder that holds CSVs queued for sharing is exposed. -->
+    <cache-path
+        name="shared_csv"
+        path="shared/" />
+</paths>
